@@ -13,7 +13,7 @@
     name: "范俊铭",
     age: 19,
     city: "广东省肇庆市",
-    qq: "123456789", // 你的QQ号，修改后头像和聊天功能自动更新
+    qq: "2389305563", // 你的QQ号，修改后头像和聊天功能自动更新
     email: "junming@example.com",
     
     // 主题配色
@@ -103,6 +103,17 @@
     html {
       scroll-behavior: smooth;
     }
+    
+    #back-to-top {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    #back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
   </style>
 </head>
 <body class="font-inter bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
@@ -185,6 +196,11 @@
     <i class="fas fa-sun hidden dark:inline"></i>
   </button>
   
+  <!-- 回到顶部按钮 -->
+  <button id="back-to-top" class="fixed bottom-20 right-6 md:right-24 z-50 w-10 h-10 bg-primary/90 rounded-full shadow-lg flex items-center justify-center text-white hover:bg-primary transition-all">
+    <i class="fas fa-arrow-up text-sm"></i>
+  </button>
+  
   <!-- 主体内容 -->
   <main class="pt-24 pb-16 px-4">
     <div class="max-w-4xl mx-auto">
@@ -193,31 +209,31 @@
       <!-- 基本信息 -->
       <section id="basic" class="mb-20 reveal">
         <div class="flex flex-col md:flex-row gap-10 items-center">
-          <div class="w-full md:w-1/2">
-            <img src="https://aka.doubaocdn.com/s/OYPS1wOHDb" alt="校园日常" class="rounded-2xl shadow-lg w-full object-cover">
+          <div class="w-full md:w-1/3">
+            <img id="qq-avatar" src="" alt="头像" class="rounded-2xl shadow-lg w-full object-cover">
           </div>
-          <div class="w-full md:w-1/2">
+          <div class="w-full md:w-2/3">
             <h2 class="text-2xl font-bold mb-6 text-primary">基本信息</h2>
             <div class="space-y-4">
               <div class="flex items-center">
-                <i class="fas fa-user w-6 text-primary"></i>
-                <span class="ml-3"><strong>姓名：</strong><span data-config="name"></span></span>
+                <i class="fas fa-user text-primary w-6"></i>
+                <span class="ml-3">姓名：<span data-config="name"></span></span>
               </div>
               <div class="flex items-center">
-                <i class="fas fa-birthday-cake w-6 text-primary"></i>
-                <span class="ml-3"><strong>年龄：</strong><span data-config="age"></span>岁</span>
+                <i class="fas fa-birthday-cake text-primary w-6"></i>
+                <span class="ml-3">年龄：<span data-config="age"></span>岁</span>
               </div>
               <div class="flex items-center">
-                <i class="fas fa-map-marker-alt w-6 text-primary"></i>
-                <span class="ml-3"><strong>城市：</strong><span data-config="city"></span></span>
+                <i class="fas fa-map-marker-alt text-primary w-6"></i>
+                <span class="ml-3">城市：<span data-config="city"></span></span>
               </div>
               <div class="flex items-center">
-                <i class="fas fa-graduation-cap w-6 text-primary"></i>
-                <span class="ml-3"><strong>学校：</strong>肇庆中学</span>
+                <i class="fab fa-qq text-primary w-6"></i>
+                <span class="ml-3">QQ：<a href="https://wpa.qq.com/msgrd?v=3&uin=2389305563&site=qq&menu=yes" target="_blank" class="text-primary hover:underline">2389305563</a></span>
               </div>
               <div class="flex items-center">
-                <i class="fas fa-envelope w-6 text-primary"></i>
-                <span class="ml-3"><strong>邮箱：</strong>junming@example.com</span>
+                <i class="fas fa-envelope text-primary w-6"></i>
+                <span class="ml-3">邮箱：<span data-config="email"></span></span>
               </div>
             </div>
           </div>
@@ -230,39 +246,39 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div class="flex items-start">
-              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                 <i class="fas fa-check text-primary"></i>
               </div>
               <div class="ml-4">
                 <h3 class="font-semibold mb-1">自律</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">坚持每天早起跑步，规律的作息让我保持最佳状态</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">做事有规划，坚持每天晨跑和学习</p>
               </div>
             </div>
             <div class="flex items-start">
-              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-lightbulb text-primary"></i>
+              <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-lightbulb text-accent"></i>
               </div>
               <div class="ml-4">
                 <h3 class="font-semibold mb-1">好奇</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">对新鲜事物充满好奇，喜欢探索未知的领域</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">对新事物充满好奇，喜欢探索未知</p>
               </div>
             </div>
             <div class="flex items-start">
-              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
                 <i class="fas fa-heart text-primary"></i>
               </div>
               <div class="ml-4">
                 <h3 class="font-semibold mb-1">热爱生活</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">善于发现生活中的小美好，用心记录每一个瞬间</p>
+                <p class="text-sm text-gray-500 dark:text-gray-400">喜欢用文字和照片记录生活的美好</p>
               </div>
             </div>
             <div class="flex items-start">
-              <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-pen text-primary"></i>
+              <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-users text-accent"></i>
               </div>
               <div class="ml-4">
-                <h3 class="font-semibold mb-1">善于记录</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">喜欢用文字、照片和代码记录自己的成长历程</p>
+                <h3 class="font-semibold mb-1">友善</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400">喜欢交朋友，乐于助人</p>
               </div>
             </div>
           </div>
@@ -272,53 +288,70 @@
       <!-- 爱好介绍 -->
       <section id="hobbies" class="mb-20 reveal">
         <h2 class="text-2xl font-bold mb-6 text-primary">爱好介绍</h2>
-        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md">
-          <div class="space-y-6">
-            <div class="flex items-center">
-              <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-                <i class="fas fa-running text-accent"></i>
-              </div>
-              <div class="ml-4">
-                <h3 class="font-semibold">长跑爱好者</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">半马完赛选手，坚持日常训练，享受奔跑的自由</p>
-              </div>
-            </div>
-            <div class="flex items-center">
+        <div class="space-y-6">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
               <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                <i class="fas fa-plane text-primary"></i>
+                <i class="fas fa-running text-primary"></i>
               </div>
-              <div class="ml-4">
-                <h3 class="font-semibold">旅行记录者</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">喜欢去不同的城市，感受当地的文化和风景</p>
-              </div>
+              <h3 class="ml-4 font-semibold">长跑</h3>
             </div>
-            <div class="flex items-center">
+            <p class="text-gray-600 dark:text-gray-400">
+              长跑是我最大的爱好，我已经跑完了好几场半马，PB是1小时57分。
+              跑步教会了我坚持和自律，也让我拥有了健康的身体。
+            </p>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
               <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-                <i class="fas fa-microchip text-accent"></i>
+                <i class="fas fa-plane text-accent"></i>
               </div>
-              <div class="ml-4">
-                <h3 class="font-semibold">AI科技探索者</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">对人工智能充满兴趣，自学编程和AI相关技术</p>
-              </div>
+              <h3 class="ml-4 font-semibold">旅行</h3>
             </div>
-            <div class="flex items-center">
+            <p class="text-gray-600 dark:text-gray-400">
+              我喜欢旅行，已经去过了18个城市。每到一个新的地方，
+              我都喜欢感受当地的文化和生活，用脚步丈量世界。
+            </p>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
               <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
-                <i class="fas fa-camera text-primary"></i>
+                <i class="fas fa-code text-primary"></i>
               </div>
-              <div class="ml-4">
-                <h3 class="font-semibold">城市摄影爱好者</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">用镜头记录城市的美好瞬间，定格生活的点滴</p>
-              </div>
+              <h3 class="ml-4 font-semibold">编程</h3>
             </div>
-            <div class="flex items-center">
+            <p class="text-gray-600 dark:text-gray-400">
+              我对编程很感兴趣，现在正在学习Python和Web开发。
+              虽然还是个萌新，但我相信只要坚持学习，就能做出很棒的东西。
+            </p>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
               <div class="w-10 h-10 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-                <i class="fas fa-book text-accent"></i>
+                <i class="fas fa-camera text-accent"></i>
               </div>
-              <div class="ml-4">
-                <h3 class="font-semibold">科幻小说读者</h3>
-                <p class="text-gray-600 dark:text-gray-400 text-sm">喜欢科幻作品，畅想未来的科技与生活</p>
-              </div>
+              <h3 class="ml-4 font-semibold">摄影</h3>
             </div>
+            <p class="text-gray-600 dark:text-gray-400">
+              我喜欢摄影，喜欢用相机记录生活中的美好瞬间。
+              无论是风景、街拍还是人像，我都喜欢尝试。
+            </p>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md">
+            <div class="flex items-center mb-4">
+              <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+                <i class="fas fa-book text-primary"></i>
+              </div>
+              <h3 class="ml-4 font-semibold">阅读</h3>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400">
+              我喜欢读书，特别是科幻小说。读书让我开阔了眼界，
+              也让我学会了很多道理。
+            </p>
           </div>
         </div>
       </section>
@@ -328,11 +361,17 @@
         <h2 class="text-2xl font-bold mb-6 text-primary">个人理念</h2>
         <div class="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-8">
           <blockquote class="text-xl italic text-center">
-            "用脚步丈量世界，用代码探索未来，<br>用镜头记录生活，用文字书写成长。"
+            "永远年轻，永远热泪盈眶。"
           </blockquote>
           <p class="text-center mt-6 text-gray-600 dark:text-gray-400">
-            我相信，每一次努力都不会白费，每一次尝试都是成长。
-            保持热爱，奔赴山海，在最好的年纪，做最想做的事。
+            我相信，人生就是一场不断探索和成长的旅程。
+            无论遇到什么困难，我都要保持对生活的热爱，
+            保持对未来的期待，永远做一个好奇的少年。
+          </p>
+          <p class="text-center mt-4 text-gray-600 dark:text-gray-400">
+            我相信，只要你愿意努力，愿意坚持，
+            你就可以成为你想成为的任何人。
+            这就是我一直以来的人生信条。
           </p>
         </div>
       </section>
@@ -344,23 +383,23 @@
           <div class="space-y-4">
             <div class="flex items-center">
               <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">1</div>
-              <p class="ml-4">考上理想的大学，继续深造计算机相关专业</p>
+              <p class="ml-4">挑战全马，跑进3小时</p>
             </div>
             <div class="flex items-center">
               <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">2</div>
-              <p class="ml-4">完成人生第一个全马比赛，挑战自己的极限</p>
+              <p class="ml-4">去更多的城市，走遍中国</p>
             </div>
             <div class="flex items-center">
               <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">3</div>
-              <p class="ml-4">深入学习人工智能技术，做出有意义的项目</p>
+              <p class="ml-4">学好编程，成为一个优秀的程序员</p>
             </div>
             <div class="flex items-center">
               <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">4</div>
-              <p class="ml-4">走遍全国31个省市，感受不同的风土人情</p>
+              <p class="ml-4">提升摄影技术，拍出更好的作品</p>
             </div>
             <div class="flex items-center">
               <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm">5</div>
-              <p class="ml-4">出版自己的摄影集，分享我眼中的世界</p>
+              <p class="ml-4">考上理想的大学，继续深造</p>
             </div>
           </div>
         </div>
@@ -370,11 +409,28 @@
   
   <!-- 页脚 -->
   <footer class="py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+    <div class="flex justify-center space-x-6 mb-4">
+      <a href="https://github.com/junming" target="_blank" class="hover:text-primary transition-colors">
+        <i class="fab fa-github text-xl"></i>
+      </a>
+      <a href="https://weibo.com/junming" target="_blank" class="hover:text-primary transition-colors">
+        <i class="fab fa-weibo text-xl"></i>
+      </a>
+      <a href="https://wpa.qq.com/msgrd?v=3&uin=2389305563&site=qq&menu=yes" target="_blank" class="hover:text-primary transition-colors">
+        <i class="fab fa-qq text-xl"></i>
+      </a>
+    </div>
     <p>© 2024 <span data-config="name"></span>. 用热爱记录生活</p>
   </footer>
   
   <!-- JavaScript 功能实现 -->
   <script>
+    // 初始化QQ头像
+    function initQQAvatar() {
+      const avatarUrl = `https://q1.qlogo.cn/g?b=qq&nk=${USER_CONFIG.qq}&s=240`;
+      document.getElementById('qq-avatar').src = avatarUrl;
+    }
+    
     // 初始化配置填充
     function initConfig() {
       // 填充个人信息
@@ -386,6 +442,9 @@
       });
       document.querySelectorAll('[data-config="city"]').forEach(el => {
         el.textContent = USER_CONFIG.city;
+      });
+      document.querySelectorAll('[data-config="email"]').forEach(el => {
+        el.textContent = USER_CONFIG.email;
       });
     }
     
@@ -503,8 +562,29 @@
       });
     }
     
+    // 回到顶部功能
+    function initBackToTop() {
+      const backToTop = document.getElementById('back-to-top');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTop.classList.add('visible');
+        } else {
+          backToTop.classList.remove('visible');
+        }
+      });
+      
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+    
     // 初始化所有功能
     document.addEventListener('DOMContentLoaded', () => {
+      initQQAvatar();
       initConfig();
       initTheme();
       initMobileMenu();
@@ -512,6 +592,7 @@
       initReveal();
       initCursor();
       initParticles();
+      initBackToTop();
     });
   </script>
 </body>
