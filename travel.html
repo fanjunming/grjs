@@ -1,0 +1,482 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旅行足迹 | 范俊铭的个人网站</title>
+  
+  <!-- 全局配置区 - 修改这里即可全站生效 -->
+  <script>
+  const USER_CONFIG = {
+    // 个人信息
+    name: "范俊铭",
+    age: 19,
+    city: "广东省肇庆市",
+    qq: "123456789", // 你的QQ号，修改后头像和聊天功能自动更新
+    email: "junming@example.com",
+    
+    // 主题配色
+    primaryColor: "#2563eb", // 主蓝
+    accentColor: "#f97316",  // 暖橙
+    
+    // 社交链接
+    social: {
+      github: "https://github.com/junming",
+      weibo: "https://weibo.com/junming"
+    }
+  };
+  </script>
+  
+  <!-- 引入外部资源 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind 配置 -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: USER_CONFIG.primaryColor,
+            accent: USER_CONFIG.accentColor,
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义样式 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+    }
+    
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .reveal-active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    #cursor {
+      width: 8px;
+      height: 8px;
+      background-color: rgba(37, 99, 235, 0.5);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+      transform: translate(-50%, -50%);
+    }
+    
+    .particle {
+      position: fixed;
+      pointer-events: none;
+      border-radius: 50%;
+      animation: particle-fade 1s ease-out forwards;
+    }
+    
+    @keyframes particle-fade {
+      0% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="font-inter bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+  <!-- 自定义鼠标光标 -->
+  <div id="cursor"></div>
+  
+  <!-- 顶部导航栏 -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center">
+          <a href="index.html" class="text-xl font-bold text-primary dark:text-white">Junming</a>
+        </div>
+        
+        <!-- 桌面端导航 -->
+        <div class="hidden md:flex items-center space-x-6">
+          <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">首页</a>
+          <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">关于我</a>
+          <a href="travel.html" class="text-primary font-medium">旅行足迹</a>
+          <a href="running.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">奔跑日记</a>
+          <a href="tech.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">科技探索</a>
+          <a href="study.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">学习随笔</a>
+          <a href="photo.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">摄影样片</a>
+          <a href="growth.html" class="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors">平时趣事</a>
+        </div>
+        
+        <!-- 移动端汉堡按钮 -->
+        <div class="md:hidden flex items-center">
+          <button id="mobile-menu-button" class="text-gray-700 dark:text-gray-300 focus:outline-none">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="index.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">首页</a>
+        <a href="about.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">关于我</a>
+        <a href="travel.html" class="block px-3 py-2 text-primary">旅行足迹</a>
+        <a href="running.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">奔跑日记</a>
+        <a href="tech.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">科技探索</a>
+        <a href="study.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">学习随笔</a>
+        <a href="photo.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">摄影样片</a>
+        <a href="growth.html" class="block px-3 py-2 text-gray-700 dark:text-gray-300 hover:text-primary">平时趣事</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- 右侧侧边导航 - 页面内锚点导航 -->
+  <aside class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden md:block">
+    <nav class="flex flex-col space-y-4">
+      <a href="#philosophy" class="sidebar-link group flex items-center justify-end" data-section="philosophy">
+        <span class="mr-3 text-sm text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">旅行理念</span>
+        <span class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-primary transition-colors"></span>
+      </a>
+      <a href="#cities" class="sidebar-link group flex items-center justify-end" data-section="cities">
+        <span class="mr-3 text-sm text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">去过城市</span>
+        <span class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-primary transition-colors"></span>
+      </a>
+      <a href="#stories" class="sidebar-link group flex items-center justify-end" data-section="stories">
+        <span class="mr-3 text-sm text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">精选故事</span>
+        <span class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-primary transition-colors"></span>
+      </a>
+      <a href="#photos" class="sidebar-link group flex items-center justify-end" data-section="photos">
+        <span class="mr-3 text-sm text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">旅行照片</span>
+        <span class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-primary transition-colors"></span>
+      </a>
+      <a href="#thoughts" class="sidebar-link group flex items-center justify-end" data-section="thoughts">
+        <span class="mr-3 text-sm text-gray-500 dark:text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity">旅行心得</span>
+        <span class="w-3 h-3 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-primary transition-colors"></span>
+      </a>
+    </nav>
+  </aside>
+  
+  <!-- 主题切换按钮 -->
+  <button id="theme-toggle" class="fixed bottom-6 right-6 md:right-24 z-50 w-12 h-12 bg-white dark:bg-gray-800 rounded-full shadow-lg flex items-center justify-center text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+    <i class="fas fa-moon dark:hidden"></i>
+    <i class="fas fa-sun hidden dark:inline"></i>
+  </button>
+  
+  <!-- 主体内容 -->
+  <main class="pt-24 pb-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-16 reveal">旅行足迹</h1>
+      
+      <!-- 旅行理念 -->
+      <section id="philosophy" class="mb-20 reveal">
+        <h2 class="text-2xl font-bold mb-6 text-primary">旅行理念</h2>
+        <div class="bg-gradient-to-r from-primary/10 to-accent/10 rounded-2xl p-8">
+          <blockquote class="text-xl italic text-center">
+            "读万卷书，行万里路。"
+          </blockquote>
+          <p class="text-center mt-6 text-gray-600 dark:text-gray-400">
+            我相信，旅行不是为了打卡景点，而是为了感受不同的文化，体验不同的生活。
+            每到一个新的城市，我都喜欢放慢脚步，走在当地的街道上，和当地人聊天，
+            品尝当地的美食，感受那里的烟火气。这才是旅行真正的意义。
+          </p>
+        </div>
+      </section>
+      
+      <!-- 去过城市统计 -->
+      <section id="cities" class="mb-20 reveal">
+        <h2 class="text-2xl font-bold mb-6 text-primary">去过城市</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary">15</div>
+              <div class="text-gray-500 dark:text-gray-400 text-sm">已到达城市</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-accent">5</div>
+              <div class="text-gray-500 dark:text-gray-400 text-sm">华南地区</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-primary">6</div>
+              <div class="text-gray-500 dark:text-gray-400 text-sm">华东地区</div>
+            </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold text-accent">4</div>
+              <div class="text-gray-500 dark:text-gray-400 text-sm">华北地区</div>
+            </div>
+          </div>
+          
+          <h3 class="font-semibold mb-4">部分去过的城市</h3>
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">肇庆</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">广州</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">深圳</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">杭州</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">苏州</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">上海</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">北京</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">天津</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">桂林</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">阳朔</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">厦门</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">福州</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">长沙</span>
+            <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-accent rounded-full text-sm">武汉</span>
+            <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-primary rounded-full text-sm">南昌</span>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 精选旅行故事 -->
+      <section id="stories" class="mb-20 reveal">
+        <h2 class="text-2xl font-bold mb-6 text-primary">精选旅行故事</h2>
+        <div class="space-y-8">
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md flex flex-col md:flex-row gap-6">
+            <img src="https://aka.doubaocdn.com/s/13yc1wOHDE" alt="古镇旅行" class="w-full md:w-1/3 rounded-xl object-cover">
+            <div>
+              <h3 class="font-bold text-xl mb-3">阳朔古镇的慢时光</h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                去年暑假，我和朋友一起去了阳朔。在那里，我们没有去热门的景点，
+                而是租了一辆电动车，沿着遇龙河慢慢骑行。清晨的古镇还没有太多游客，
+                青石板路上洒着阳光，我们在路边的小店吃了一碗桂林米粉，
+                然后沿着小河边走边看，那种悠闲的时光，至今想起来都觉得美好。
+              </p>
+            </div>
+          </div>
+          
+          <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md flex flex-col md:flex-row gap-6">
+            <img src="https://aka.doubaocdn.com/s/gxpn1wOHDE" alt="鼎湖山" class="w-full md:w-1/3 rounded-xl object-cover">
+            <div>
+              <h3 class="font-bold text-xl mb-3">家门口的风景</h3>
+              <p class="text-gray-600 dark:text-gray-400">
+                很多人都觉得旅行要去很远的地方，但其实最美的风景可能就在家门口。
+                肇庆的鼎湖山，我去了很多次，但每一次去都有不同的感受。
+                春天的时候，山上的杜鹃花开了，夏天的时候，在山涧里玩水，
+                秋天的时候，看满山的红叶，冬天的时候，感受山里的宁静。
+                原来，只要用心感受，身边的一切都是风景。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 旅行照片 -->
+      <section id="photos" class="mb-20 reveal">
+        <h2 class="text-2xl font-bold mb-6 text-primary">旅行照片</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="group relative overflow-hidden rounded-2xl">
+            <img src="https://aka.doubaocdn.com/s/7dfr1wOHDE" alt="肇庆街景" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white">肇庆骑楼街</span>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl">
+            <img src="https://aka.doubaocdn.com/s/gxpn1wOHDE" alt="鼎湖山" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white">鼎湖山天池</span>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl">
+            <img src="https://aka.doubaocdn.com/s/13yc1wOHDE" alt="古镇" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white">阳朔古镇</span>
+            </div>
+          </div>
+          <div class="group relative overflow-hidden rounded-2xl">
+            <img src="https://aka.doubaocdn.com/s/GduK1wOHDb" alt="城市日落" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+              <span class="text-white">城市日落</span>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 旅行心得 -->
+      <section id="thoughts" class="reveal">
+        <h2 class="text-2xl font-bold mb-6 text-primary">旅行心得</h2>
+        <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-md">
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+            旅行教会了我很多东西。它让我知道，世界很大，有很多不同的生活方式。
+            它让我学会了独立，学会了处理旅途中遇到的各种问题。
+            它让我更加包容，理解了不同的文化和不同的人。
+          </p>
+          <p class="text-gray-600 dark:text-gray-400 leading-relaxed mt-4">
+            每一次旅行，都是一次成长。我会继续走下去，去看更多的风景，
+            去认识更多的人，去体验更多的生活。因为我知道，
+            在路上，永远有新的惊喜在等着我。
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+  
+  <!-- 页脚 -->
+  <footer class="py-8 text-center text-gray-500 dark:text-gray-400 text-sm">
+    <p>© 2024 <span data-config="name"></span>. 用热爱记录生活</p>
+  </footer>
+  
+  <!-- JavaScript 功能实现 -->
+  <script>
+    // 初始化配置填充
+    function initConfig() {
+      // 填充个人信息
+      document.querySelectorAll('[data-config="name"]').forEach(el => {
+        el.textContent = USER_CONFIG.name;
+      });
+      document.querySelectorAll('[data-config="age"]').forEach(el => {
+        el.textContent = USER_CONFIG.age;
+      });
+      document.querySelectorAll('[data-config="city"]').forEach(el => {
+        el.textContent = USER_CONFIG.city;
+      });
+    }
+    
+    // 主题切换
+    function initTheme() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const html = document.documentElement;
+      
+      // 检查保存的主题
+      if (localStorage.getItem('theme') === 'dark' || 
+          (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+      }
+      
+      themeToggle.addEventListener('click', () => {
+        html.classList.toggle('dark');
+        localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+      });
+    }
+    
+    // 移动端菜单
+    function initMobileMenu() {
+      const menuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      menuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+    
+    // 侧边导航高亮
+    function initSidebar() {
+      const sections = document.querySelectorAll('section[id]');
+      const sidebarLinks = document.querySelectorAll('.sidebar-link');
+      
+      function highlightSidebar() {
+        const scrollY = window.pageYOffset;
+        
+        sections.forEach(section => {
+          const sectionHeight = section.offsetHeight;
+          const sectionTop = section.offsetTop - 100;
+          const sectionId = section.getAttribute('id');
+          
+          if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+            sidebarLinks.forEach(link => {
+              link.querySelector('span:last-child').classList.remove('bg-primary');
+              link.querySelector('span:last-child').classList.add('bg-gray-300', 'dark:bg-gray-600');
+              
+              if(link.getAttribute('data-section') === sectionId) {
+                link.querySelector('span:last-child').classList.remove('bg-gray-300', 'dark:bg-gray-600');
+                link.querySelector('span:last-child').classList.add('bg-primary');
+              }
+            });
+          }
+        });
+      }
+      
+      window.addEventListener('scroll', highlightSidebar);
+      highlightSidebar(); // 初始化
+    }
+    
+    // 滚动 Reveal 动画
+    function initReveal() {
+      const revealElements = document.querySelectorAll('.reveal');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-active');
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      
+      revealElements.forEach(element => {
+        observer.observe(element);
+      });
+    }
+    
+    // 自定义鼠标光标
+    function initCursor() {
+      const cursor = document.getElementById('cursor');
+      
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+    }
+    
+    // 点击粒子效果
+    function initParticles() {
+      document.addEventListener('click', (e) => {
+        const colors = [USER_CONFIG.primaryColor, USER_CONFIG.accentColor, '#60a5fa', '#fb923c'];
+        
+        for (let i = 0; i < 6; i++) {
+          const particle = document.createElement('div');
+          particle.classList.add('particle');
+          
+          const size = Math.random() * 6 + 2;
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          
+          particle.style.width = size + 'px';
+          particle.style.height = size + 'px';
+          particle.style.backgroundColor = color;
+          particle.style.left = e.clientX + 'px';
+          particle.style.top = e.clientY + 'px';
+          
+          document.body.appendChild(particle);
+          
+          setTimeout(() => {
+            particle.remove();
+          }, 1000);
+        }
+      });
+    }
+    
+    // 初始化所有功能
+    document.addEventListener('DOMContentLoaded', () => {
+      initConfig();
+      initTheme();
+      initMobileMenu();
+      initSidebar();
+      initReveal();
+      initCursor();
+      initParticles();
+    });
+  </script>
+</body>
+</html>
